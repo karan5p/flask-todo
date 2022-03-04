@@ -5,31 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo app</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Todo app</h1>
-  <form action="/add", methods="POST">
-        <div>
-            <label for="title">Todo Title</label>
-            <input type="text" name="title" placeholder="Enter todo...">
-    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Simple Flask Todo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
             
-            <br>
-            <button type="submit">Add</button>
+         
+         
+        </div>
+      </nav>
+    <div class = "" style = "height: 350px">
+         <div class="container justify-content-center align-items-center">
+            <h1 >Todo app</h1>
+                <form action="/add" method="POST">
+                    <div>
+                        <label for="title">Todo Title</label>
+                        <input type="text" name="title" placeholder="Enter todo...">
+                        <br>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+                {% for todo in todo_list %}
+                <p class="card-subtitle mb-2 text-muted">Task</p>
+                <p>
+                    {{todo.id}} | {{todo.title}}
+                </p>
+                {% if todo.complete == False %}
+                <span>Not complete</span>
+                {% else %}
+                <span>Completed</span>
+                {% endif %}
+                <br>
+                <a type="button" class="btn btn-secondary" href = "/update/{{ todo.id }}">Update</a>
+                <a type="button" class="btn btn-danger" href = "/delete/{{ todo.id }}">Delete</a>
+            {% endfor %}
+        </div>
     </div>
-  </form>
- {% for todo in todo_list %}
-    <p>
-        {{todo.id}} | {{todo.title}}
-    </p>
-    {% if todo.complete == False %}
-    <span>Not complete</span>
-    {% else %}
-    <span>Completed</span>
-    {% endif %}
-    <a href = "/">Update</a>
-    <a href = "/">Delete</a>
-  
- {% endfor %}
 </body>
 </html>
